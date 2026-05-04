@@ -1,2 +1,2 @@
-package registerRepository
+package repository
 
