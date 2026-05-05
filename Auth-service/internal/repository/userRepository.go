@@ -33,8 +33,10 @@ func (r *UserRepository) userCaching(ctx context.Context, user *models.User) err
 }
 
 
-func (r *UserRepository) UserCreate(ctx context.Context, req *models.UserCreateRequest) (string, error) {
-	user := &models.User{Login: req.Login, Email: req.Email, PasswordHash: req.PasswordHash, IsVerified: false, Role: "User", Created_at: datatypes.Date(time.Now())}
+func (r *UserRepository) UserCreate(ctx context.Context, user *models.User) (string, error) {
+	user.IsVerified = false
+	user.Role = "User"
+	user.Created_at = datatypes.Date(time.Now())
 	if err := r.db.Model(&models.User{}).Create(user).Error; err != nil {
 		return "...nothing...", fmt.Errorf("Repository: Create user failed! %w", err)
 	}
