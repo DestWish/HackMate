@@ -33,7 +33,7 @@ func (r *UserRepository) userCaching(ctx context.Context, user *models.User) err
 }
 
 
-func (r *UserRepository) UserCreate(ctx context.Context, user *models.User) (string, error) {
+func (r *UserRepository) CreateUser(ctx context.Context, user *models.User) (string, error) {
 	user.IsVerified = false
 	user.Role = "User"
 	user.Created_at = datatypes.Date(time.Now())
