@@ -1,10 +1,19 @@
 package models
 
+import "gorm.io/datatypes"
+
 type User struct {
-	login string
-	email string
-	passwordHash string
-	isVerified bool
-	status string
-	created_at [5]int
+	Login string
+	Email string
+	PasswordHash string
+	IsVerified bool
+	Role string
+	Created_at datatypes.Date
 }
+
+
+type UserCreateRequest struct {
+	Login string
+	Email string
+	PasswordHash string
+} 

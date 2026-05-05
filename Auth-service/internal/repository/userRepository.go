@@ -3,6 +3,8 @@ package repository
 import (
 	"context"
 	"fmt"
+	"gorm.io/datatypes"
+	"time"
 
 	"github.com/DestWish/HackMate/Auth-service/internal/models"
 	"github.com/redis/go-redis/v9"
@@ -21,10 +23,25 @@ func NewUserRepo(db *gorm.DB, redisClient *redis.Client) *UserRepository {
 
 
 func (r *UserRepository) userCaching(ctx context.Context, user *models.User) error {
-	key := userCacheKey(User.login)
+	key := userCacheKey(user.Login)
+
+	if err := r.redisClient.HSet(ctx, key, user).Err(); err != nil {
+		return fmt.Errorf("Repo: Cache failed: %w", err)
+	}
+
+	return nil
 }
 
 
-func userCacheKey(userID uint) string {
-	return fmt.Sprintf("user:%v", userID)
+func (r *UserRepository) userCreate(ctx context.Context, req *models.UserCreateRequest) (string, error) {
+	user := &models.User{Login: req.Login, Email: req.Email, PasswordHash: req.PasswordHash, IsVerified: false, Role: "User", Created_at: datatypes.Date(time.Now())}
+	if err := r.db.Model(&models.User{}).Create(user).Error; err != nil {
+		return "...nothing...", fmt.Errorf("Repository: Create user failed! %w", err)
+	}
+	return user.Login, r.userCaching(ctx, user)
+}
+
+
+func userCacheKey(userLogin string) string {
+	return fmt.Sprintf("user:%v", userLogin)
 }
