@@ -1,6 +1,8 @@
 package models
 
-import "gorm.io/datatypes"
+import (
+	"gorm.io/datatypes"
+)
 
 type User struct {
 	Login string
@@ -15,5 +17,5 @@ type User struct {
 type UserCreateRequest struct {
 	Login string
 	Email string
-	PasswordHash string
+	Password string
 } 

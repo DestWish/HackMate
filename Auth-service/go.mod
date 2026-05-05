@@ -2,7 +2,11 @@ module github.com/DestWish/HackMate/Auth-service
 
 go 1.25.5
 
-require gorm.io/gorm v1.31.1
+require (
+	github.com/golang-jwt/jwt/v5 v5.3.1
+	golang.org/x/crypto v0.23.0
+	gorm.io/gorm v1.31.1
+)
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
