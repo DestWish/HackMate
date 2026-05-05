@@ -1,4 +1,4 @@
-module github.com/DestWish/HackMate.git/Auth-service
+module github.com/DestWish/HackMate/Auth-service
 
 go 1.25.5
 
