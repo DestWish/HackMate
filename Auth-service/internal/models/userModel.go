@@ -1,7 +1,7 @@
 package models
 
 import (
-	"gorm.io/datatypes"
+	"time"
 )
 
 type User struct {
@@ -10,7 +10,7 @@ type User struct {
 	PasswordHash string
 	IsVerified bool
 	Role string
-	Created_at datatypes.Date
+	CreatedAt time.Time
 }
 
 

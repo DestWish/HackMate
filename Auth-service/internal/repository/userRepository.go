@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 	"fmt"
-	"gorm.io/datatypes"
-	"time"
+	// "gorm.io/datatypes"
+	// "time"
 
 	"github.com/DestWish/HackMate/Auth-service/internal/models"
 	"github.com/redis/go-redis/v9"
@@ -36,7 +36,7 @@ func (r *UserRepository) userCaching(ctx context.Context, user *models.User) err
 func (r *UserRepository) CreateUser(ctx context.Context, user *models.User) (string, error) {
 	user.IsVerified = false
 	user.Role = "User"
-	user.Created_at = datatypes.Date(time.Now())
+	
 	if err := r.db.Model(&models.User{}).Create(user).Error; err != nil {
 		return "...nothing...", fmt.Errorf("Repository: Create user failed! %w", err)
 	}
